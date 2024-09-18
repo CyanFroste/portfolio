@@ -1,16 +1,17 @@
 ---
-
+import RootLayout from '../layouts/RootLayout.astro'
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Astro</h1>
-  </body>
-</html>
+<RootLayout title="Cyan Froste">
+  <div class="flex flex-col items-center">
+    <h1 class="font-title text-8xl leading-normal">Cyan Froste</h1>
+
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime deleniti beatae consequuntur ipsam laborum ab
+      possimus, odit corporis ut in voluptatem adipisci aliquam expedita, necessitatibus id? Ad dolore similique
+      laboriosam.
+    </p>
+
+    <a href="/themes">Themes</a>
+  </div>
+</RootLayout>

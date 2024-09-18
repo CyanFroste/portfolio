@@ -1,0 +1,12 @@
+{
+  "colors": {
+    "primary": ["#c8bc08", "#e0e442", "#a20f4a", "#ef85a3"],
+    "secondary": ["#73caea", "#6c9853", "#b9bdf3", "#a1e3bd"],
+    "gray": ["#F5F5F5", "#CDCDCC", "#A5A5A4", "#7D7D7B", "#555552", "#2D2D2A", "#050501"]
+  },
+  "fontFamily": {
+    "title": "Amita",
+    "body": "Poppins",
+    "mono": "JetBrains Mono"
+  }
+}
