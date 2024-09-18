@@ -5,41 +5,63 @@ import { THEME_MAP } from '../constants'
 ---
 
 <RootLayout title="Themes">
-  <div class="flex flex-col items-center">
+  <div class="flex flex-col items-center p-4">
     {
-      Object.entries(THEME_MAP).map(([key, theme]) => (
-        <div>
-          <button>{key}</button>
+      Object.entries(THEME_MAP).map(([name, theme]) => {
+        const background = `linear-gradient(to right, ${theme.colors.primary}, ${theme.colors.secondary})`
 
-          <div>
-            <h3>Colors</h3>
+        return (
+          <div class="p-1" style={{ background }}>
+            <div class="p-4 flex flex-col gap-2 bg-gray-100">
+              <button class="flex items-center">
+                <span class="text-4xl font-bold !bg-clip-text text-transparent" style={{ background }}>
+                  {name}
+                </span>
 
-            {Object.entries(theme.colors).map(([category, values]) => (
-              <div>
-                <h4>{category}</h4>
-                <ul class="flex items-center">
-                  {values.map(color => (
-                    <li class="p-4 font-mono" style={{ backgroundColor: color, color: getTextColorFromBgColor(color) }}>
-                      {color}
-                    </li>
-                  ))}
-                </ul>
+                <span class="ml-auto p-2 uppercase text-sm bg-green-500 text-white">Applied</span>
+                <span>Apply</span>
+              </button>
+
+              <h3 class="text-lg">Colors</h3>
+
+              {Object.entries(theme.colors).map(([category, values]) => (
+                <div class="flex flex-col gap-2 pl-2">
+                  <h4 class="text-sm capitalize">{category}</h4>
+
+                  <ul class="flex items-center">
+                    {values.map((color, index) => (
+                      <li
+                        class="py-2 px-4 font-mono flex flex-col"
+                        style={{ backgroundColor: color, color: getTextColorFromBgColor(color) }}>
+                        {(index + 1) * 100}
+                        {color}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+
+              <h3 class="text-lg">Fonts</h3>
+
+              <div class="flex items-center gap-12 pl-2">
+                {Object.entries(theme.fontFamily).map(([category, value]) => (
+                  <div class="flex flex-col">
+                    <h4 class="text-sm capitalize">{category}</h4>
+
+                    <p class="text-lg" style={{ fontFamily: value }}>
+                      {value}
+                    </p>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
           </div>
-
-          <div>
-            <h3>Fonts</h3>
-
-            {Object.entries(theme.fontFamily).map(([category, value]) => (
-              <div>
-                <h4>{category}</h4>
-                <p style={{ fontFamily: value }}>{value}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      ))
+        )
+      })
     }
   </div>
 </RootLayout>
+
+<script>
+  import { isActiveTheme, type ThemeMapKey } from '../themes/store'
+</script>

@@ -1,7 +1,7 @@
 import { persistentAtom } from '@nanostores/persistent'
 import { THEME_MAP } from '../constants'
 
-type ThemeMapKey = keyof typeof THEME_MAP
+export type ThemeMapKey = keyof typeof THEME_MAP
 
 export const activeTheme = persistentAtom<ThemeMapKey>('theme', 'Mozu And Kiwi')
 
@@ -25,3 +25,7 @@ export function applyTheme(key: ThemeMapKey = activeTheme.get()) {
 }
 
 activeTheme.subscribe(applyTheme)
+
+export function isActiveTheme(key: ThemeMapKey) {
+  return activeTheme.get() === key
+}
