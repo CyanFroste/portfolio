@@ -5,24 +5,27 @@ import { THEME_MAP } from '../constants'
 ---
 
 <RootLayout title="Themes">
-  <div class="flex flex-col items-center p-4">
+  <div class="flex flex-col items-center px-4 py-12 gap-12">
     {
       Object.entries(THEME_MAP).map(([name, theme]) => {
         const background = `linear-gradient(45deg, ${theme.colors.primary}, ${theme.colors.secondary})`
 
         return (
-          <div class="p-4 flex flex-col gap-2 bg-gray-100 relative">
+          <div class="theme p-4 flex flex-col gap-2 bg-gray-100 relative" data-name={name} data-active={false}>
             <div class="absolute -inset-1 -z-[1] animate-gradient" style={{ background }} />
             <div class="absolute -inset-1 -z-[1] animate-gradient blur-lg opacity-80" style={{ background }} />
 
-            <button class="flex items-center">
-              <span class="text-6xl font-title !bg-clip-text text-transparent animate-gradient" style={{ background }}>
+            <button class="flex">
+              <span class="text-6xl leading-normal font-title !bg-clip-text text-transparent animate-gradient" style={{ background }}>
                 {name}
               </span>
 
-              <span class="ml-auto px-2 py-1 tracking-wider uppercase text-sm bg-emerald-500 text-gray-100 font-semibold">
-                Applied
-              </span>
+              <span
+                data-status="not-applied"
+                class="indicator 
+                ml-auto px-3 py-1 tracking-wider uppercase text-sm border-2 font-semibold border-emerald-500 text-emerald-500 rounded-full
+                data-[status=applied]:bg-emerald-500 data-[status=applied]:text-gray-100"
+              />
             </button>
 
             <h3 class="text-lg">Colors</h3>
@@ -65,7 +68,39 @@ import { THEME_MAP } from '../constants'
 </RootLayout>
 
 <script>
-  import { isActiveTheme, type ThemeMapKey } from '../themes/store'
+  import { isActiveTheme, setTheme, type ThemeMapKey } from '../themes/store'
+
+  document.addEventListener('astro:page-load', () => {
+    const themes = document.querySelectorAll<HTMLDivElement>('.theme')
+
+    function onThemeChange() {
+      for (const theme of themes) {
+        const ind = theme.querySelector<HTMLSpanElement>('.indicator')!
+
+        if (isActiveTheme(theme.dataset.name as ThemeMapKey)) {
+          theme.dataset.active = 'true'
+          ind.dataset.status = 'applied'
+          ind.textContent = 'Applied'
+        } else {
+          theme.dataset.active = 'false'
+          ind.dataset.status = ''
+          ind.textContent = 'Apply'
+        }
+      }
+    }
+
+    for (const theme of themes) {
+      theme.querySelector('button')!.addEventListener('click', () => {
+        const name = theme.dataset.name as ThemeMapKey
+        if (isActiveTheme(name)) return
+
+        setTheme(name)
+        onThemeChange()
+      })
+    }
+
+    onThemeChange()
+  })
 </script>
 
 <style>

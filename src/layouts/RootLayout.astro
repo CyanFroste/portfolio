@@ -23,7 +23,7 @@ const { title } = Astro.props
     <title>{title}</title>
     <ViewTransitions />
   </head>
-  <body class="h-full" transition:animate="slide">
+  <body class="h-full bg-gray-100 text-gray-700 font-body" transition:animate="fade">
     <slot />
   </body>
 </html>
@@ -31,15 +31,11 @@ const { title } = Astro.props
 <script>
   import { applyTheme } from '../themes/store'
 
-  document.addEventListener('astro:after-swap', () => applyTheme())
+  document.addEventListener('astro:page-load', () => applyTheme())
 </script>
 
 <style is:global>
   :root {
-    @apply text-[20px];
-  }
-
-  body {
-    @apply bg-gray-100 text-gray-700 font-body;
+    font-size: 18px;
   }
 </style>
