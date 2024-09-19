@@ -8,52 +8,54 @@ import { THEME_MAP } from '../constants'
   <div class="flex flex-col items-center p-4">
     {
       Object.entries(THEME_MAP).map(([name, theme]) => {
-        const background = `linear-gradient(to right, ${theme.colors.primary}, ${theme.colors.secondary})`
+        const background = `linear-gradient(45deg, ${theme.colors.primary}, ${theme.colors.secondary})`
 
         return (
-          <div class="p-1" style={{ background }}>
-            <div class="p-4 flex flex-col gap-2 bg-gray-100">
-              <button class="flex items-center">
-                <span class="text-4xl font-bold !bg-clip-text text-transparent" style={{ background }}>
-                  {name}
-                </span>
+          <div class="p-4 flex flex-col gap-2 bg-gray-100 relative">
+            <div class="absolute -inset-1 -z-[1] animate-gradient" style={{ background }} />
+            <div class="absolute -inset-1 -z-[1] animate-gradient blur-lg opacity-80" style={{ background }} />
 
-                <span class="ml-auto p-2 uppercase text-sm bg-green-500 text-white">Applied</span>
-                <span>Apply</span>
-              </button>
+            <button class="flex items-center">
+              <span class="text-6xl font-title !bg-clip-text text-transparent animate-gradient" style={{ background }}>
+                {name}
+              </span>
 
-              <h3 class="text-lg">Colors</h3>
+              <span class="ml-auto px-2 py-1 tracking-wider uppercase text-sm bg-emerald-500 text-gray-100 font-semibold">
+                Applied
+              </span>
+            </button>
 
-              {Object.entries(theme.colors).map(([category, values]) => (
-                <div class="flex flex-col gap-2 pl-2">
+            <h3 class="text-lg">Colors</h3>
+
+            {Object.entries(theme.colors).map(([category, values]) => (
+              <div class="flex flex-col gap-2 pl-2">
+                <h4 class="text-sm capitalize">{category}</h4>
+
+                <ul class="flex items-center">
+                  {values.map((color, index) => (
+                    <li
+                      class="py-2 px-4 font-mono flex flex-col"
+                      style={{ backgroundColor: color, color: getTextColorFromBgColor(color) }}>
+                      {(index + 1) * 100}
+                      {color}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+
+            <h3 class="text-lg">Fonts</h3>
+
+            <div class="flex items-center gap-12 pl-2">
+              {Object.entries(theme.fontFamily).map(([category, value]) => (
+                <div class="flex flex-col">
                   <h4 class="text-sm capitalize">{category}</h4>
 
-                  <ul class="flex items-center">
-                    {values.map((color, index) => (
-                      <li
-                        class="py-2 px-4 font-mono flex flex-col"
-                        style={{ backgroundColor: color, color: getTextColorFromBgColor(color) }}>
-                        {(index + 1) * 100}
-                        {color}
-                      </li>
-                    ))}
-                  </ul>
+                  <p class="text-lg" style={{ fontFamily: value }}>
+                    {value}
+                  </p>
                 </div>
               ))}
-
-              <h3 class="text-lg">Fonts</h3>
-
-              <div class="flex items-center gap-12 pl-2">
-                {Object.entries(theme.fontFamily).map(([category, value]) => (
-                  <div class="flex flex-col">
-                    <h4 class="text-sm capitalize">{category}</h4>
-
-                    <p class="text-lg" style={{ fontFamily: value }}>
-                      {value}
-                    </p>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         )
@@ -65,3 +67,22 @@ import { THEME_MAP } from '../constants'
 <script>
   import { isActiveTheme, type ThemeMapKey } from '../themes/store'
 </script>
+
+<style>
+  .animate-gradient {
+    background-size: 400% !important;
+    animation: bg-glow-animation 40s linear infinite;
+  }
+
+  @keyframes bg-glow-animation {
+    0% {
+      background-position: 0 0;
+    }
+    50% {
+      background-position: 400% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+</style>

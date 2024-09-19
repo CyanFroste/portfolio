@@ -1,7 +1,7 @@
 {
   "colors": {
-    "primary": ["#c8bc08", "#e0e442", "#a20f4a", "#ef85a3"],
-    "secondary": ["#73caea", "#6c9853", "#b9bdf3", "#a1e3bd"],
+    "primary": ["#C8BC08", "#E0E442", "#A20F4A", "#EF85A3"],
+    "secondary": ["#73CAEA", "#6C9853", "#B9BDF3", "#A1E3BD"],
     "gray": ["#F5F5F5", "#CDCDCC", "#A5A5A4", "#7D7D7B", "#555552", "#2D2D2A", "#050501"]
   },
   "fontFamily": {
