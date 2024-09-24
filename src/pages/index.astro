@@ -47,14 +47,12 @@ async function getGithubContributions() {
 <RootLayout title="Cyan Froste">
   <div class="flex flex-col items-center">
     <h1
-      class="font-title text-8xl leading-normal bg-gradient-to-tr from-primary-100 to-primary-200 bg-clip-text text-transparent">
+      class="my-24 font-title text-8xl leading-normal bg-gradient-to-tr from-primary-100 to-primary-200 bg-clip-text text-transparent">
       Cyan Froste
     </h1>
 
-    <a href="/themes">Themes</a>
-
     <div
-      class="mt-20 mb-2 grid gap-1 text-sm font-semibold text-gray-400 font-mono"
+      class="mt-12 mb-2 grid gap-1 text-sm font-semibold text-gray-400 font-mono"
       style={{ gridTemplateColumns: githubContributions.cols }}>
       {Array.from({ length: githubContributions.cols - 12 }, () => <div class="size-5" style={{ gridRow: 1 }} />)}
 

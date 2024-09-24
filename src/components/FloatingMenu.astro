@@ -1,0 +1,110 @@
+---
+import { Icon } from 'astro-icon/components'
+---
+
+<div
+  id="floating-menu"
+  data-state=""
+  class="flex h-10 rounded-full shrink-0 fixed z-[1000] top-20 left-20 bg-gray-100 shadow-lg border pointer-events-auto">
+  <div class="drag-handle h-full pl-4 pr-2 text-xl flex items-center text-gray-300 cursor-move">
+    <Icon name="radix-icons:drag-handle-dots-2" />
+  </div>
+
+  <a
+    href="/"
+    class="h-full px-2 tracking-wide font-semibold bg-gradient-to-tr from-primary-300 to-primary-400 bg-clip-text text-transparent flex items-center">
+    HOME
+  </a>
+
+  <button class="open h-full pl-4 pr-6 text-2xl flex items-center transition-colors">
+    <Icon name="radix-icons:hamburger-menu" />
+  </button>
+
+  <div class="menu-backdrop absolute w-full aspect-square rounded-full -top-full bg-secondary-300 scale-0"></div>
+
+  <div class="menu fixed inset-0 pointer-events-none transition-[opacity,transform] opacity-0 -translate-x-10">
+    <div class="flex flex-col mx-auto py-10 max-w-screen-lg">
+      <div class="flex items-center mb-10">
+        <button class="close text-4xl ml-auto p-2">
+          <Icon name="radix-icons:cross-1" />
+        </button>
+      </div>
+
+      <nav class="flex flex-col gap-4 font-title text-6xl">
+        <a href="/themes">Themes</a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const container = document.querySelector<HTMLDivElement>('#floating-menu')!
+    const dragHandle = container.querySelector<HTMLDivElement>('.drag-handle')!
+    const openBtn = container.querySelector<HTMLButtonElement>('button.open')!
+    const closeBtn = container.querySelector<HTMLButtonElement>('button.close')!
+
+    const offset = { x: 0, y: 0 }
+    let isDragging = false
+
+    const onMouseDown = (evt: MouseEvent) => {
+      const rect = container.getBoundingClientRect()
+      offset.x = evt.clientX - rect.left
+      offset.y = evt.clientY - rect.top
+      isDragging = true
+    }
+
+    const onMouseMove = (evt: MouseEvent) => {
+      if (!isDragging) return
+      container.style.left = evt.clientX - offset.x + 'px'
+      container.style.top = evt.clientY - offset.y + 'px'
+    }
+
+    const onMouseUp = () => (isDragging = false)
+
+    dragHandle.addEventListener('mousedown', onMouseDown)
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseup', onMouseUp)
+
+    openBtn.addEventListener('click', () => (container.dataset.state = 'open'))
+    closeBtn.addEventListener('click', () => (container.dataset.state = 'closed'))
+    window.addEventListener('keydown', evt => {
+      if (evt.key === 'Escape') container.dataset.state = container.dataset.state === 'open' ? 'closed' : 'open'
+    })
+  })
+</script>
+
+<style>
+  #floating-menu[data-state='open'] .menu-backdrop {
+    animation: menu-backdrop-expand 750ms ease-in-out forwards;
+  }
+
+  #floating-menu[data-state='closed'] .menu-backdrop {
+    animation: menu-backdrop-shrink 500ms ease-in-out forwards;
+  }
+
+  #floating-menu[data-state='open'] .menu {
+    transition-delay: 500ms;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0);
+  }
+
+  @keyframes menu-backdrop-shrink {
+    0% {
+      transform: scale(100);
+    }
+    100% {
+      transform: scale(0);
+    }
+  }
+
+  @keyframes menu-backdrop-expand {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(100);
+    }
+  }
+</style>
