@@ -12,10 +12,18 @@ function hexToRgb(hex: string): Rgb {
   return { r, g, b }
 }
 
-export function getTextColorFromBgColor(color: string | Rgb) {
+export function isLight(color: string | Rgb) {
   const { r, g, b } = typeof color === 'string' ? hexToRgb(color) : color
   const luminance = 0.2126 * (r / 255) + 0.7152 * (g / 255) + 0.0722 * (b / 255)
-  return luminance > 0.5 ? 'black' : 'white'
+  return luminance > 0.5
+}
+
+export function indexToThemeKey(index: number) {
+  return (index + 1) * 100
+}
+
+export function themeKeyToIndex(key: number) {
+  return key / 100 - 1
 }
 
 export function cn(...inputs: ClassValue[]) {

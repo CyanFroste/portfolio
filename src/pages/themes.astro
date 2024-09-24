@@ -1,11 +1,11 @@
 ---
 import RootLayout from '../layouts/RootLayout.astro'
-import { getTextColorFromBgColor } from '../utils'
+import { isLight } from '../utils'
 import { THEME_MAP } from '../constants'
 ---
 
 <RootLayout title="Themes">
-  <div class="flex flex-col items-center px-4 py-12 gap-12">
+  <div class="flex flex-col items-center px-4 py-16 gap-16">
     {
       Object.entries(THEME_MAP).map(([name, theme]) => {
         const background = `linear-gradient(45deg, ${theme.colors.primary}, ${theme.colors.secondary})`
@@ -13,18 +13,20 @@ import { THEME_MAP } from '../constants'
         return (
           <div class="theme p-4 flex flex-col gap-2 bg-gray-100 relative" data-name={name} data-active={false}>
             <div class="absolute -inset-1 -z-[1] animate-gradient" style={{ background }} />
-            <div class="absolute -inset-1 -z-[1] animate-gradient blur-lg opacity-80" style={{ background }} />
+            <div class="absolute -inset-1 -z-[1] animate-gradient blur-lg opacity-60" style={{ background }} />
 
             <button class="flex">
-              <span class="text-6xl leading-normal font-title !bg-clip-text text-transparent animate-gradient" style={{ background }}>
+              <span
+                class="text-6xl leading-normal font-title !bg-clip-text text-transparent animate-gradient"
+                style={{ background }}>
                 {name}
               </span>
 
               <span
                 data-status="not-applied"
                 class="indicator 
-                ml-auto px-3 py-1 tracking-wider uppercase text-sm border-2 font-semibold border-emerald-500 text-emerald-500 rounded-full
-                data-[status=applied]:bg-emerald-500 data-[status=applied]:text-gray-100"
+                ml-auto px-3 py-1 tracking-wider text-sm border-2 font-semibold border-gray-600 text-gray-600 rounded-full
+                data-[status=applied]:bg-gray-600 data-[status=applied]:text-gray-100"
               />
             </button>
 
@@ -32,13 +34,13 @@ import { THEME_MAP } from '../constants'
 
             {Object.entries(theme.colors).map(([category, values]) => (
               <div class="flex flex-col gap-2 pl-2">
-                <h4 class="text-sm capitalize">{category}</h4>
+                <h4 class="text-sm capitalize text-gray-600">{category}</h4>
 
                 <ul class="flex items-center">
                   {values.map((color, index) => (
                     <li
                       class="py-2 px-4 font-mono flex flex-col"
-                      style={{ backgroundColor: color, color: getTextColorFromBgColor(color) }}>
+                      style={{ backgroundColor: color, color: theme.colors.gray.at(isLight(color) ? -1 : 0) }}>
                       {(index + 1) * 100}
                       {color}
                     </li>
@@ -52,7 +54,7 @@ import { THEME_MAP } from '../constants'
             <div class="flex items-center gap-12 pl-2">
               {Object.entries(theme.fontFamily).map(([category, value]) => (
                 <div class="flex flex-col">
-                  <h4 class="text-sm capitalize">{category}</h4>
+                  <h4 class="text-sm capitalize text-gray-600">{category}</h4>
 
                   <p class="text-lg" style={{ fontFamily: value }}>
                     {value}

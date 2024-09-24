@@ -1,0 +1,103 @@
+---
+import { Icon } from 'astro-icon/components'
+import puppeteer from 'puppeteer'
+
+import data from '../data/github-sample.json' assert { type: 'json' }
+const { contributions, avatar } = data
+
+// const { contributions, avatar } = await getData()
+
+const PROFILE_URL = 'https://github.com/CyanFroste'
+
+async function getData() {
+  type ContributionDay = { date: string; level: number; x: number; y: number }
+
+  // ! https://stackoverflow.com/questions/78996364/chrome-129-headless-shows-blank-window
+  const browser = await puppeteer.launch({ headless: true, args: ['--window-position=-2400,-2400'] })
+  const page = await browser.newPage()
+  await page.goto(PROFILE_URL)
+  const contributionsEl = await page.waitForSelector('.js-yearly-contributions')
+
+  const contributions = await contributionsEl!.$$eval('td.ContributionCalendar-day', els => {
+    const days: ContributionDay[] = []
+    const months: Record<number, string> = {}
+    let cols = 0
+
+    for (const { dataset, id } of els) {
+      const d: ContributionDay = {
+        date: dataset.date!, // assuming date is always present
+        level: +(dataset.level ?? -1),
+        x: +(dataset.ix ?? 0),
+        y: +(id.split('-').slice(-2)[0] ?? 0),
+      }
+
+      days.push(d)
+      if (d.x + 1 > cols) cols = d.x + 1
+
+      const [, m] = d.date.split('-')
+      if (d.date.endsWith('01'))
+        months[d.x] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'][+m - 1]
+    }
+
+    return { days, months, cols }
+  })
+
+  const avatar = await page.$eval('.avatar.avatar-user', el => (el as HTMLImageElement).src)
+
+  await browser.close()
+  return { contributions, avatar }
+}
+---
+
+<div class="flex flex-col">
+  <div class="flex items-center gap-6">
+    <img src={avatar} alt="GitHub Avatar" class="size-20 rounded-full shrink-0" />
+    <a href={PROFILE_URL} class="text-gray-600 text-3xl" target="_blank">
+      <Icon name="radix-icons:github-logo" />
+    </a>
+    <h3 class="text-sm font-semibold text-gray-400 font-mono">GITHUB CONTRIBUTIONS</h3>
+  </div>
+
+  <div
+    class="mt-8 mb-2 grid gap-1 text-sm font-semibold text-gray-400 font-mono"
+    style={{ gridTemplateColumns: contributions.cols }}>
+    {Array.from({ length: contributions.cols - 12 }, () => <div class="size-5" style={{ gridRow: 1 }} />)}
+
+    {
+      Object.entries(contributions.months).map(([x, month]) => (
+        <div class="size-5 -rotate-90" style={{ gridColumn: +x + 1, gridRow: 1 }}>
+          {month}
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="grid gap-1" style={{ gridTemplateColumns: contributions.cols }}>
+    {
+      contributions.days.map(({ level, x, y }) => (
+        <div
+          class="bg-primary-300 size-5 rounded"
+          style={{ gridColumn: x + 1, gridRow: y + 1, opacity: 1 - ((4 - level) * 1.75) / 10 }}
+        />
+      ))
+    }
+  </div>
+
+  <div class="flex mt-6 items-center gap-6">
+    <div class="text-sm font-semibold text-gray-400 font-mono ml-auto">LEVELS</div>
+
+    <div class="flex items-center gap-1">
+      {
+        Array.from({ length: 5 }, (_, level) => (
+          <div class="bg-primary-300 size-5 rounded" style={{ opacity: 1 - ((4 - level) * 1.75) / 10 }} />
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ contributions, avatar }}>
+  console.log(contributions, avatar)
+  // const githubContributions = document.querySelector('#github-contributions-html')
+  // console.log(githubContributions)
+</script>

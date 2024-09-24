@@ -1,5 +1,6 @@
 import { persistentAtom } from '@nanostores/persistent'
 import { THEME_MAP } from '../constants'
+import { indexToThemeKey } from '../utils'
 
 export type ThemeMapKey = keyof typeof THEME_MAP
 
@@ -9,13 +10,17 @@ export function setTheme(key: ThemeMapKey) {
   activeTheme.set(key)
 }
 
+export function getTheme(key: ThemeMapKey = activeTheme.get()) {
+  return THEME_MAP[key]
+}
+
 export function applyTheme(key: ThemeMapKey = activeTheme.get()) {
-  const theme = THEME_MAP[key]
+  const theme = getTheme(key)
   // if (!theme) return // assuming there will always be a theme
 
   for (const [category, values] of Object.entries(theme.colors)) {
     for (const [index, value] of values.entries()) {
-      document.documentElement.style.setProperty(`--${category}-${(index + 1) * 100}`, value)
+      document.documentElement.style.setProperty(`--${category}-${indexToThemeKey(index)}`, value)
     }
   }
 

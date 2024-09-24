@@ -1,85 +1,22 @@
 ---
+import GitHub from '../components/GitHub.astro'
 import RootLayout from '../layouts/RootLayout.astro'
-import puppeteer from 'puppeteer'
-
-// const githubContributions = await getGithubContributions()
-
-import githubContributions from '../data/github-sample.json' assert { type: 'json' }
-
-async function getGithubContributions() {
-  type ContributionDay = { date: string; level: number; x: number; y: number }
-
-  // ! https://stackoverflow.com/questions/78996364/chrome-129-headless-shows-blank-window
-  const browser = await puppeteer.launch({ headless: true, args: ['--window-position=-2400,-2400'] })
-  const page = await browser.newPage()
-  await page.goto('https://github.com/CyanFroste')
-  const el = await page.waitForSelector('.js-yearly-contributions')
-
-  const data = await el?.$$eval('td.ContributionCalendar-day', els => {
-    const days: ContributionDay[] = []
-    const months: Record<number, string> = {}
-    let cols = 0
-
-    for (const { dataset, id } of els) {
-      const d: ContributionDay = {
-        date: dataset.date!, // assuming date is always present
-        level: +(dataset.level ?? -1),
-        x: +(dataset.ix ?? 0),
-        y: +(id.split('-').slice(-2)[0] ?? 0),
-      }
-
-      days.push(d)
-      if (d.x + 1 > cols) cols = d.x + 1
-
-      const [, m] = d.date.split('-')
-      if (d.date.endsWith('01'))
-        months[d.x] = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'][+m - 1]
-    }
-
-    return { days, months, cols }
-  })
-
-  await browser.close()
-  return data ?? { days: [], months: {}, cols: 0 }
-}
 ---
 
 <RootLayout title="Cyan Froste">
-  <div class="flex flex-col items-center">
+  <div class="flex flex-col items-center py-20">
     <h1
-      class="my-24 font-title text-8xl leading-normal bg-gradient-to-tr from-primary-100 to-primary-200 bg-clip-text text-transparent">
+      class="my-8 font-title text-8xl leading-normal bg-gradient-to-tr from-primary-100 to-primary-200 bg-clip-text text-transparent">
       Cyan Froste
     </h1>
 
-    <div
-      class="mt-12 mb-2 grid gap-1 text-sm font-semibold text-gray-400 font-mono"
-      style={{ gridTemplateColumns: githubContributions.cols }}>
-      {Array.from({ length: githubContributions.cols - 12 }, () => <div class="size-5" style={{ gridRow: 1 }} />)}
-
-      {
-        Object.entries(githubContributions.months).map(([x, month]) => (
-          <div class="size-5 -rotate-90" style={{ gridColumn: +x + 1, gridRow: 1 }}>
-            {month}
-          </div>
-        ))
-      }
+    <div class="mb-40">
+      <h2
+        class="font-mono text-4xl italic bg-gradient-to-br from-secondary-100 to-secondary-200 bg-clip-text text-transparent">
+        Web Developer
+      </h2>
     </div>
 
-    <div class="grid gap-1" style={{ gridTemplateColumns: githubContributions.cols }}>
-      {
-        githubContributions.days.map(({ level, x, y }) => (
-          <div
-            class="bg-primary-300 size-5 rounded"
-            style={{ gridColumn: x + 1, gridRow: y + 1, opacity: 1 - ((4 - level) * 1.75) / 10 }}
-          />
-        ))
-      }
-    </div>
+    <GitHub />
   </div>
 </RootLayout>
-
-<script is:inline define:vars={{ githubContributions }}>
-  console.log(githubContributions)
-  // const githubContributions = document.querySelector('#github-contributions-html')
-  // console.log(githubContributions)
-</script>

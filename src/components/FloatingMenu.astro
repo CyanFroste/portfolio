@@ -20,9 +20,11 @@ import { Icon } from 'astro-icon/components'
     <Icon name="radix-icons:hamburger-menu" />
   </button>
 
-  <div class="menu-backdrop absolute w-full aspect-square rounded-full -top-full bg-secondary-300 scale-0"></div>
+  <div
+    class="menu-backdrop absolute size-full rounded-full scale-0 bg-gradient-to-r from-secondary-300 to-secondary-400">
+  </div>
 
-  <div class="menu fixed inset-0 pointer-events-none transition-[opacity,transform] opacity-0 -translate-x-10">
+  <div class="menu fixed inset-0 pointer-events-none transition-opacity opacity-0">
     <div class="flex flex-col mx-auto py-10 max-w-screen-lg">
       <div class="flex items-center mb-10">
         <button class="close text-4xl ml-auto p-2">
@@ -30,7 +32,8 @@ import { Icon } from 'astro-icon/components'
         </button>
       </div>
 
-      <nav class="flex flex-col gap-4 font-title text-6xl">
+      <nav class="flex flex-col items-center justify-center gap-4 font-title text-6xl leading-normal">
+        <a href="/">Home</a>
         <a href="/themes">Themes</a>
       </nav>
     </div>
@@ -38,11 +41,19 @@ import { Icon } from 'astro-icon/components'
 </div>
 
 <script>
+  import { getTheme } from '../themes/store'
+  import { isLight, themeKeyToIndex } from '../utils'
+
   document.addEventListener('astro:page-load', () => {
     const container = document.querySelector<HTMLDivElement>('#floating-menu')!
     const dragHandle = container.querySelector<HTMLDivElement>('.drag-handle')!
     const openBtn = container.querySelector<HTMLButtonElement>('button.open')!
     const closeBtn = container.querySelector<HTMLButtonElement>('button.close')!
+
+    const theme = getTheme()
+    const isLightBg = isLight(theme.colors.secondary[themeKeyToIndex(300)]) // bg is a gradient... but this works for now
+
+    container.style.color = theme.colors.gray.at(isLightBg ? -1 : 0)!
 
     const offset = { x: 0, y: 0 }
     let isDragging = false
@@ -87,7 +98,6 @@ import { Icon } from 'astro-icon/components'
     transition-delay: 500ms;
     opacity: 1;
     pointer-events: auto;
-    transform: translateX(0);
   }
 
   @keyframes menu-backdrop-shrink {
