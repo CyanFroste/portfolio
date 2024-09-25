@@ -18,6 +18,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Print node version
+        run: node -v
       - name: Install puppeteer libraries
         run: |
           sudo apt-get update
