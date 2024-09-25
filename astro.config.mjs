@@ -8,5 +8,5 @@ import icon from 'astro-icon'
 export default defineConfig({
   integrations: [tailwind(), react(), icon({ include: { 'radix-icons': ['*'] } })],
   site: 'https://cyanfroste.github.io',
-  base: 'portfolio',
+  // base: 'portfolio',
 })
