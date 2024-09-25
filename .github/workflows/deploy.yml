@@ -18,12 +18,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Print node version
-        run: node -v
       - name: Install puppeteer libraries
         run: |
           sudo apt-get update
           sudo apt-get install -y libgbm1
+          pnpm exec puppeteer browsers install chrome
       - name: Checkout your repository using git
         uses: actions/checkout@v4
       - name: Install, build, and upload your site
