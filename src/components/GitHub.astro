@@ -1,13 +1,12 @@
 ---
 import { Icon } from 'astro-icon/components'
 import puppeteer from 'puppeteer'
-
-import data from '../data/github-sample.json' assert { type: 'json' }
-const { contributions, avatar } = data
-
-// const { contributions, avatar } = await getData()
+// import data from '../data/github-sample.json' assert { type: 'json' }
+// const { contributions, avatar } = data
 
 const PROFILE_URL = 'https://github.com/CyanFroste'
+
+const { contributions, avatar } = await getData()
 
 async function getData() {
   type ContributionDay = { date: string; level: number; x: number; y: number }
