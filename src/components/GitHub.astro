@@ -12,7 +12,10 @@ async function getData() {
   type ContributionDay = { date: string; level: number; x: number; y: number }
 
   // ! https://stackoverflow.com/questions/78996364/chrome-129-headless-shows-blank-window
-  const browser = await puppeteer.launch({ headless: true, args: ['--window-position=-2400,-2400'] })
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--window-position=-2400,-2400', '--no-sandbox', '--disable-setuid-sandbox'],
+  })
   const page = await browser.newPage()
   await page.goto(PROFILE_URL)
   const contributionsEl = await page.waitForSelector('.js-yearly-contributions')
