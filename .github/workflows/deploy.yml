@@ -18,23 +18,29 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
+
       - name: Install puppeteer libraries
         run: |
           sudo apt-get update
           sudo apt-get install -y libgbm1
 
-      - name: Checkout your repository using git
-        uses: actions/checkout@v4
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: latest
 
-      - name: Install Browsers
-        run: npx puppeteer browsers install
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile                
+
+      - name: Install Browsers        
+        run: pnpm dlx puppeteer browsers install        
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3
         with:
-          package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
-          # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (optional)
-          # path: . # The root location of your Astro project inside the repository. (optional)
+          package-manager: pnpm@latest
 
   deploy:
     needs: build
