@@ -35,7 +35,7 @@ jobs:
         run: pnpm install --frozen-lockfile                
 
       - name: Install Browsers        
-        run: pnpm dlx puppeteer browsers install        
+        run: npx puppeteer browsers install chrome
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3
