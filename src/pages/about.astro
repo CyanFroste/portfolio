@@ -1,0 +1,73 @@
+---
+import { Icon } from 'astro-icon/components'
+import Layout from '../layouts/Layout.astro'
+import Footer from '../components/Footer.astro'
+import Navbar from '../components/Navbar.astro'
+---
+
+<Layout title="Cyan Froste">
+  <Navbar />
+
+  <div class="flex flex-col items-center pt-20 w-full max-w-6xl mx-auto">
+    <img
+      src={import.meta.env.BASE_URL + '/cyan-flame.png'}
+      alt="cyan-flame-illustration"
+      class="size-40 lg:size-64 mt-20"
+    />
+
+    <h1
+      class="text-5xl lg:text-7xl font-display uppercase font-medium leading-normal
+      bg-gradient-to-b from-cyan-200 to-cyan-600 bg-clip-text text-transparent">
+      Cyan Froste
+    </h1>
+
+    <div class="flex gap-4 mb-20">
+      <div class="flex flex-col gap-2 text-right text-zinc-300">
+        <span class="leading-7 align-middle">A</span>
+        <span class="leading-9">An</span>
+        <span>And</span>
+      </div>
+
+      <div class="flex flex-col gap-2">
+        <span class="text-xl font-mono text-green-500">Programmer</span>
+        <span class="text-3xl text-blue-400 font-display tracking-wide">ARTIST</span>
+        <span class="text-red-400">Dead Inside</span>
+      </div>
+    </div>
+
+    <h2
+      class="text-4xl lg:text-5xl font-display uppercase leading-normal
+      my-10 lg:my-20 bg-gradient-to-b from-orange-600 to-orange-200 bg-clip-text text-transparent">
+      STACK
+    </h2>
+
+    <div class="grid grid-cols-6 lg:grid-cols-12 w-full gap-6 p-4 lg:p-0 lg:[&>svg]:p-1.5">
+      <Icon name="logos:rust" class="w-full h-auto fill-white aspect-square" />
+      <Icon name="logos:typescript-icon" class="w-full h-auto aspect-square" />
+      <Icon name="logos:javascript" class="w-full h-auto aspect-square" />
+      <Icon name="logos:python" class="w-full h-auto aspect-square" />
+      <Icon name="logos:go" class="w-full h-auto aspect-square" />
+      <Icon name="logos:kotlin-icon" class="w-full h-auto aspect-square" />
+      <Icon name="logos:dart" class="w-full h-auto aspect-square" />
+      <Icon name="logos:java" class="w-full h-auto aspect-square" />
+      <Icon name="logos:c-sharp" class="w-full h-auto aspect-square" />
+      <Icon name="logos:php-alt" class="w-full fill-white h-auto aspect-square" />
+      <Icon name="logos:html-5" class="w-full fill-white h-auto aspect-square" />
+      <Icon name="logos:css-3" class="w-full fill-white h-auto aspect-square" />
+      <Icon name="logos:react" class="w-full h-auto aspect-square" />
+      <Icon name="logos:svelte-icon" class="w-full h-auto aspect-square" />
+      <Icon name="astro" class="w-full h-auto aspect-square" />
+      <Icon name="logos:laravel" class="w-full h-auto aspect-square" />
+      <Icon name="logos:flutter" class="w-full h-auto aspect-square" />
+      <Icon name="logos:tailwindcss-icon" class="w-full h-auto aspect-square" />
+      <Icon name="logos:postgresql" class="w-full h-auto aspect-square" />
+      <Icon name="logos:mongodb-icon" class="w-full h-auto aspect-square" />
+      <Icon name="logos:git-icon" class="w-full h-auto aspect-square" />
+      <Icon name="logos:docker-icon" class="w-full h-auto aspect-square" />
+      <Icon name="logos:kubernetes" class="w-full h-auto aspect-square" />
+      <Icon name="aws" class="w-full h-auto aspect-square" />
+    </div>
+
+    <Footer class="mt-10 lg:mt-36" />
+  </div>
+</Layout>

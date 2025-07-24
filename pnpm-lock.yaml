@@ -14,6 +14,9 @@ importers:
       '@astrojs/sitemap':
         specifier: ^3.4.1
         version: 3.4.1
+      '@iconify-json/logos':
+        specifier: ^1.2.5
+        version: 1.2.5
       '@iconify-json/radix-icons':
         specifier: ^1.2.2
         version: 1.2.2
@@ -336,6 +339,9 @@ packages:
     engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
+
+  '@iconify-json/logos@1.2.5':
+    resolution: {integrity: sha512-WR8+9kFwx1tIR+hWpKYC+rpVkAuzHyaVxZRfhGGIjqCfgbodK7rS4+OZhktdKtZKKcdmhpLZKvlmRm4IA4dKRg==}
 
   '@iconify-json/radix-icons@1.2.2':
     resolution: {integrity: sha512-+PPmKWDP7pfJMcEc9Ty1zyo/zzq+9rfKW4EGb2HSZcPu1VUhothDLFzWvBqQNoFIOYCJ2nm0Vmf8kVyYhq9G0Q==}
@@ -2796,6 +2802,10 @@ snapshots:
 
   '@esbuild/win32-x64@0.25.8':
     optional: true
+
+  '@iconify-json/logos@1.2.5':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify-json/radix-icons@1.2.2':
     dependencies:
