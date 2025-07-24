@@ -1,22 +1,91 @@
 ---
+import Layout from '../layouts/Layout.astro'
 import GitHub from '../components/GitHub.astro'
-import RootLayout from '../layouts/RootLayout.astro'
+import Footer from '../components/Footer.astro'
+
+const NAVLINKS = [
+  ['About', '/about'],
+  ['Blogs', '/blogs'],
+]
 ---
 
-<RootLayout title="Cyan Froste">
-  <div class="flex flex-col items-center py-20">
+<Layout title="Home">
+  <div class="flex flex-col items-center pt-20 w-full max-w-6xl mx-auto">
     <h1
-      class="my-8 font-title text-8xl leading-normal bg-gradient-to-tr from-primary-100 to-primary-200 bg-clip-text text-transparent">
+      class="text-7xl lg:text-[8rem] font-display uppercase font-medium leading-normal
+      mt-8 mb-4 bg-gradient-to-b from-cyan-800 to-cyan-200/80 bg-clip-text text-transparent">
       Cyan Froste
     </h1>
 
-    <div class="mb-40">
-      <h2
-        class="font-mono text-4xl italic bg-gradient-to-br from-secondary-100 to-secondary-200 bg-clip-text text-transparent">
-        Web Developer
-      </h2>
+    <div class="mb-32 flex text-center text-sm uppercase text-zinc-300">
+      {
+        NAVLINKS.map(([name, href]) => (
+          <a
+            href={import.meta.env.BASE_URL + href}
+            class="p-2 w-32 hover:bg-zinc-800/40 hover:text-zinc-100 transition-colors">
+            {name}
+          </a>
+        ))
+      }
     </div>
 
     <GitHub />
+
+    <h2
+      class="text-4xl lg:text-5xl font-display uppercase leading-normal
+      mt-36 lg:mt-60 mb-10 lg:mb-20 bg-gradient-to-b from-orange-800 to-orange-200/80 bg-clip-text text-transparent">
+      PROJECTS
+    </h2>
+
+    <div class="flex flex-col relative px-3 lg:px-10 pt-20 gap-10 isolate overflow-hidden">
+      <img
+        alt="project-meowsic-backdrop"
+        src="https://github.com/CyanFroste/meowsic/raw/master/screenshots/6.png"
+        class="absolute inset-0 -z-1 size-full blur-xl object-cover opacity-50"
+      />
+
+      <img
+        alt="project-meowsic-screenshot"
+        src="https://github.com/CyanFroste/meowsic/raw/master/screenshots/3.png"
+        class="lg:w-2/3 mx-auto rounded-lg shadow-lg brightness-125"
+      />
+
+      <div
+        class="p-4 lg:p-10 backdrop-blur-lg bg-gradient-to-b from-purple-900/30 to-transparent rounded-t-lg flex flex-col">
+        <img
+          src="https://github.com/CyanFroste/meowsic/raw/master/assets/icons/logo.png"
+          alt="meowsic-logo"
+          class="size-16 mb-4"
+        />
+
+        <h2
+          class="mb-2 text-[2rem] font-display uppercase leading-normal
+          bg-gradient-to-b from-purple-700 via-purple-300 to-purple-50 bg-clip-text text-transparent">
+          Meowsic
+        </h2>
+
+        <p class="text-zinc-300 mb-10">A beautiful and modern music player for Windows and Linux.</p>
+
+        <div class="flex gap-4">
+          <a
+            target="_blank"
+            href="https://github.com/CyanFroste/meowsic/releases"
+            class="px-4 py-1.5 text-sm border transition-colors w-full lg:w-auto text-center
+            bg-purple-800/20 border-purple-800 text-purple-300 hover:bg-purple-800/40 hover:text-purple-100">
+            Download
+          </a>
+
+          <a
+            target="_blank"
+            href="https://github.com/CyanFroste/meowsic"
+            class="px-4 py-1.5 text-sm border w-full lg:w-auto text-center
+            border-zinc-600 text-zinc-300 hover:bg-zinc-800/40 hover:text-zinc-100 transition-colors">
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <Footer class="mt-10 lg:mt-50" />
   </div>
-</RootLayout>
+</Layout>

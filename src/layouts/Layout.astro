@@ -1,0 +1,35 @@
+---
+import '../styles/global.css'
+
+type Props = { title: string }
+
+const { title } = Astro.props
+---
+
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content="Cyan Froste's Portfolio" />
+
+    <link rel="icon" type="image/ico" href={import.meta.env.BASE_URL + '/favicon.ico'} />
+    <link rel="sitemap" href={import.meta.env.BASE_URL + '/sitemap.xml'} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Teko:wght@300..700&display=swap"
+    />
+
+    <title>{title}</title>
+  </head>
+
+  <body class="h-full text-zinc-100 bg-zinc-950">
+    <div class="fixed inset-0 -z-10 size-full bg-gradient-to-b from-cyan-950 to-cyan-800"></div>
+
+    <div class="size-full bg-black/88 overflow-auto">
+      <slot />
+    </div>
+  </body>
+</html>

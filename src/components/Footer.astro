@@ -1,0 +1,16 @@
+---
+import { cn } from '../utils'
+
+type Props = { class?: string }
+
+const { class: className } = Astro.props
+---
+
+<div class={cn('text-center h-10 shrink-0 flex items-center text-xs text-zinc-500', className)}>
+  Copyright &copy; <span class="year px-1"></span> Cyan Froste
+</div>
+
+<script>
+  const yearEl = document.querySelector<HTMLSpanElement>('.year')!
+  yearEl.textContent = new Date().getFullYear().toString()
+</script>

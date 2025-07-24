@@ -3,8 +3,8 @@ import { Icon } from 'astro-icon/components'
 ---
 
 <div
-  id="floating-menu"
   data-state=""
+  id="floating-menu"
   class="flex h-10 rounded-full shrink-0 fixed z-[1000] top-20 left-20 bg-gray-100 shadow-lg border pointer-events-auto">
   <div class="drag-handle h-full pl-4 pr-2 text-xl flex items-center text-gray-300 cursor-move">
     <Icon name="radix-icons:drag-handle-dots-2" />
@@ -41,19 +41,11 @@ import { Icon } from 'astro-icon/components'
 </div>
 
 <script>
-  import { getTheme } from '../themes/store'
-  import { isLight, themeKeyToIndex } from '../utils'
-
   document.addEventListener('astro:page-load', () => {
     const container = document.querySelector<HTMLDivElement>('#floating-menu')!
     const dragHandle = container.querySelector<HTMLDivElement>('.drag-handle')!
     const openBtn = container.querySelector<HTMLButtonElement>('button.open')!
     const closeBtn = container.querySelector<HTMLButtonElement>('button.close')!
-
-    const theme = getTheme()
-    const isLightBg = isLight(theme.colors.secondary[themeKeyToIndex(300)]) // bg is a gradient... but this works for now
-
-    container.style.color = theme.colors.gray.at(isLightBg ? -1 : 0)!
 
     const offset = { x: 0, y: 0 }
     let isDragging = false

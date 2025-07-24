@@ -18,14 +18,6 @@ export function isLight(color: string | Rgb) {
   return luminance > 0.5
 }
 
-export function indexToThemeKey(index: number) {
-  return (index + 1) * 100
-}
-
-export function themeKeyToIndex(key: number) {
-  return key / 100 - 1
-}
-
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
