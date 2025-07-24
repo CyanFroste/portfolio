@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install Browsers
-        run: pnpm dlx puppeteer browsers install
+        run: npx puppeteer browsers install
 
       - name: Install, build, and upload your site
         uses: withastro/action@v3
