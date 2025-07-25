@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from 'astro:content'
+import Layout from '../../layouts/Layout.astro'
+import Footer from '../../components/Footer.astro'
+
+export async function getStaticPaths() {
+  const data = await getCollection('blogs')
+
+  return data.map(item => ({ params: { id: item.id }, props: { item } }))
+}
+
+const { item } = Astro.props
+const { Content } = await render(item)
+---
+
+<Layout
+  title={`${item.data.title} | Cyan Froste's Blogs`}
+  description={`Blogs by Cyan Froste - ${item.data.description} - ${item.data.tags.join(', ')}`}
+  image="https://github.com/CyanFroste/meowsic/raw/master/screenshots/6.png"
+  blog={{
+    title: item.data.title,
+    description: item.data.description,
+    author: item.data.author,
+    date: item.data.date.toISOString().split('T')[0],
+  }}>
+  <img src={item.data.banner} alt="banner" class="h-40 lg:h-60 w-full object-cover object-center" />
+
+  <div class="flex flex-col pt-8 lg:pt-16 w-full max-w-6xl mx-auto p-4 pb-0">
+    <h1 class="text-4xl lg:text-6xl font-display uppercase">{item.data.title}</h1>
+    <p class="mb-20 text-xs lg:text-sm text-zinc-500">
+      by <span class="text-zinc-400">{item.data.author}</span> on {item.data.date.toLocaleString()}
+    </p>
+
+    <div class="prose-zinc dark:prose-invert prose lg:prose-lg max-w-full">
+      <Content />
+    </div>
+
+    <div class="flex flex-col mt-10 lg:mt-36">
+      <div class="flex gap-y-1 gap-x-2 flex-wrap text-xs lg:text-sm text-zinc-400">
+        {item.data.tags.map(tag => <span>#{tag}</span>)}
+      </div>
+
+      <Footer class="self-center mt-4 lg:mt-10" />
+    </div>
+  </div>
+</Layout>

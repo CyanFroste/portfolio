@@ -2,13 +2,12 @@
 import { Icon } from 'astro-icon/components'
 import Layout from '../layouts/Layout.astro'
 import Footer from '../components/Footer.astro'
-import Navbar from '../components/Navbar.astro'
 ---
 
-<Layout title="Cyan Froste">
-  <Navbar />
-
-  <div class="flex flex-col items-center pt-20 w-full max-w-6xl mx-auto">
+<Layout
+  title="About Cyan Froste"
+  description="Few words about Cyan Froste (illustrated by a flame) and all the technology stack he uses (illustrated by their logos)">
+  <div class="flex flex-col items-center pt-8 lg:pt-20 w-full max-w-6xl mx-auto">
     <img
       src={import.meta.env.BASE_URL + '/cyan-flame.png'}
       alt="cyan-flame-illustration"
@@ -42,30 +41,45 @@ import Navbar from '../components/Navbar.astro'
     </h2>
 
     <div class="grid grid-cols-6 lg:grid-cols-12 w-full gap-6 p-4 lg:p-0 lg:[&>svg]:p-1.5">
-      <Icon name="logos:rust" class="w-full h-auto fill-white aspect-square" />
-      <Icon name="logos:typescript-icon" class="w-full h-auto aspect-square" />
-      <Icon name="logos:javascript" class="w-full h-auto aspect-square" />
-      <Icon name="logos:python" class="w-full h-auto aspect-square" />
-      <Icon name="logos:go" class="w-full h-auto aspect-square" />
-      <Icon name="logos:kotlin-icon" class="w-full h-auto aspect-square" />
-      <Icon name="logos:dart" class="w-full h-auto aspect-square" />
-      <Icon name="logos:java" class="w-full h-auto aspect-square" />
-      <Icon name="logos:c-sharp" class="w-full h-auto aspect-square" />
-      <Icon name="logos:php-alt" class="w-full fill-white h-auto aspect-square" />
-      <Icon name="logos:html-5" class="w-full fill-white h-auto aspect-square" />
-      <Icon name="logos:css-3" class="w-full fill-white h-auto aspect-square" />
-      <Icon name="logos:react" class="w-full h-auto aspect-square" />
-      <Icon name="logos:svelte-icon" class="w-full h-auto aspect-square" />
-      <Icon name="astro" class="w-full h-auto aspect-square" />
-      <Icon name="logos:laravel" class="w-full h-auto aspect-square" />
-      <Icon name="logos:flutter" class="w-full h-auto aspect-square" />
-      <Icon name="logos:tailwindcss-icon" class="w-full h-auto aspect-square" />
-      <Icon name="logos:postgresql" class="w-full h-auto aspect-square" />
-      <Icon name="logos:mongodb-icon" class="w-full h-auto aspect-square" />
-      <Icon name="logos:git-icon" class="w-full h-auto aspect-square" />
-      <Icon name="logos:docker-icon" class="w-full h-auto aspect-square" />
-      <Icon name="logos:kubernetes" class="w-full h-auto aspect-square" />
-      <Icon name="aws" class="w-full h-auto aspect-square" />
+      <Icon name="logos:rust" class="w-full h-auto fill-white aspect-square" aria-label="Rust" title="Rust" />
+      <Icon
+        name="logos:typescript-icon"
+        class="w-full h-auto aspect-square"
+        aria-label="TypeScript"
+        title="TypeScript"
+      />
+      <Icon name="logos:javascript" class="w-full h-auto aspect-square" aria-label="JavaScript" title="JavaScript" />
+      <Icon name="logos:python" class="w-full h-auto aspect-square" aria-label="Python" title="Python" />
+      <Icon name="logos:go" class="w-full h-auto aspect-square" aria-label="Go" title="Go" />
+      <Icon name="logos:kotlin-icon" class="w-full h-auto aspect-square" aria-label="Kotlin" title="Kotlin" />
+      <Icon name="logos:dart" class="w-full h-auto aspect-square" aria-label="Dart" title="Dart" />
+      <Icon name="logos:java" class="w-full h-auto aspect-square" aria-label="Java" title="Java" />
+      <Icon name="logos:c-sharp" class="w-full h-auto aspect-square" aria-label="C#" title="C#" />
+      <Icon name="logos:php-alt" class="w-full fill-white h-auto aspect-square" aria-label="PHP" title="PHP" />
+      <Icon name="logos:html-5" class="w-full fill-white h-auto aspect-square" aria-label="HTML" title="HTML" />
+      <Icon name="logos:css-3" class="w-full fill-white h-auto aspect-square" aria-label="CSS" title="CSS" />
+      <Icon name="logos:react" class="w-full h-auto aspect-square" aria-label="React" title="React" />
+      <Icon name="logos:svelte-icon" class="w-full h-auto aspect-square" aria-label="Svelte" title="Svelte" />
+      <Icon name="astro" class="w-full h-auto aspect-square" aria-label="Astro" title="Astro" />
+      <Icon name="logos:laravel" class="w-full h-auto aspect-square" aria-label="Laravel" title="Laravel" />
+      <Icon
+        name="jetpack-compose"
+        class="w-full h-auto aspect-square"
+        aria-label="Jetpack Compose"
+        title="Jetpack Compose"
+      />
+      <Icon name="logos:flutter" class="w-full h-auto aspect-square" aria-label="Flutter" title="Flutter" />
+      <Icon
+        name="logos:tailwindcss-icon"
+        class="w-full h-auto aspect-square"
+        aria-label="TailwindCSS"
+        title="TailwindCSS"
+      />
+      <Icon name="logos:postgresql" class="w-full h-auto aspect-square" aria-label="PostgreSQL" title="PostgreSQL" />
+      <Icon name="logos:mongodb-icon" class="w-full h-auto aspect-square" aria-label="MongoDB" title="MongoDB" />
+      <Icon name="logos:git-icon" class="w-full h-auto aspect-square" aria-label="Git" title="Git" />
+      <Icon name="logos:docker-icon" class="w-full h-auto aspect-square" aria-label="Docker" title="Docker" />
+      <Icon name="logos:kubernetes" class="w-full h-auto aspect-square" aria-label="Kubernetes" title="Kubernetes" />
     </div>
 
     <Footer class="mt-10 lg:mt-36" />

@@ -1,20 +1,42 @@
 ---
 import '../styles/global.css'
 
-type Props = { title: string }
+type Props = {
+  title: string
+  description: string
+  image?: string
+  blog?: { title: string; description: string; author: string; date: string }
+}
 
-const { title } = Astro.props
+const {
+  title,
+  description,
+  blog,
+  image = import.meta.env.SITE + import.meta.env.BASE_URL + '/cyan-flame.png',
+} = Astro.props
+
+const structuredData = !blog
+  ? ''
+  : JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: blog.title,
+      description: blog.description,
+      image,
+      author: { '@type': 'Person', name: blog.author },
+      datePublished: blog.date,
+      mainEntityOfPage: { '@type': 'WebPage', '@id': Astro.url },
+    })
 ---
 
 <html lang="en" class="h-full">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="description" content="Cyan Froste's Portfolio" />
 
     <link rel="icon" type="image/ico" href={import.meta.env.BASE_URL + '/favicon.ico'} />
-    <link rel="sitemap" href={import.meta.env.BASE_URL + '/sitemap.xml'} />
+    <link rel="sitemap" href={import.meta.env.BASE_URL + '/sitemap-index.xml'} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -23,6 +45,25 @@ const { title } = Astro.props
     />
 
     <title>{title}</title>
+
+    <meta name="description" content={description} />
+    <meta name="canonical" content={import.meta.env.SITE} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:url" content={Astro.url} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <meta name="theme-color" content="#f4f4f5" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <script is:inline type="application/ld+json" set:html={structuredData} />
   </head>
 
   <body class="h-full text-zinc-100 bg-zinc-950">
