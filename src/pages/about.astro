@@ -7,7 +7,7 @@ import Footer from '../components/Footer.astro'
 <Layout
   title="About Cyan Froste"
   description="Few words about Cyan Froste (illustrated by a flame) and all the technology stack he uses (illustrated by their logos)">
-  <div class="flex flex-col items-center pt-8 lg:pt-20 w-full max-w-6xl mx-auto">
+  <div class="flex flex-col items-center pt-8 lg:pt-20 size-full max-w-6xl mx-auto">
     <img
       src={import.meta.env.BASE_URL + '/cyan-flame.png'}
       alt="cyan-flame-illustration"
@@ -40,7 +40,7 @@ import Footer from '../components/Footer.astro'
       STACK
     </h2>
 
-    <div class="grid grid-cols-6 lg:grid-cols-12 w-full gap-6 p-4 lg:p-0 lg:[&>svg]:p-1.5">
+    <div class="grid grid-cols-6 lg:grid-cols-12 w-full gap-6 p-4 lg:p-0 lg:[&>svg]:p-1.5 mb-auto">
       <Icon name="logos:rust" class="w-full h-auto fill-white aspect-square" aria-label="Rust" title="Rust" />
       <Icon
         name="logos:typescript-icon"

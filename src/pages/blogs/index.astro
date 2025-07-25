@@ -27,7 +27,7 @@ const data = await getCollection('blogs')
               <p class="text-zinc-300 mb-8 text-sm lg:text-base">{item.data.description}</p>
 
               <p class="text-xs lg:text-sm text-zinc-500 ml-auto py-1">
-                by <span class="text-zinc-400">{item.data.author}</span> on {item.data.date.toLocaleString()}
+                by <span class="text-zinc-400">{item.data.author}</span> on {item.data.date.toLocaleDateString()}
               </p>
             </a>
           </li>
